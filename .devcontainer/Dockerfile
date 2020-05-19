@@ -22,8 +22,6 @@ RUN apt-get update \
     && /bin/bash /tmp/common-setup.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" \
     && rm /tmp/common-setup.sh
 
-RUN cp -r /root/.local /home/vscode/ && \
-    chmod 755 -R /opt/cabal/2.4/bin && \
-    chmod 755 -R /opt/ghc/8.6.5/bin 
+RUN cp -r /root/.local /home/vscode/
 
 ENV PATH /root/.cabal/bin:/home/vscode/.local/bin:/opt/cabal/2.4/bin:/opt/ghc/8.6.5/bin:$PATH
