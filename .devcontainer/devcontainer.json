@@ -1,8 +1,24 @@
 {
-  "name": "GHC 8.6.5 with HIE, Stack, and Cabal",
+  "name": "GHC with Stack, Cabal, and HIE / HLS",
   "dockerFile": "Dockerfile",
   "runArgs": [],
-
+  "build": {
+    "args": {
+      // Currently the only supported versions are 8.6.5 and 8.8.3
+      "GHC_VERSION": "8.8.3",
+      // Currently the only supported LSP providers are hie (Haskell IDE Engine) and hls (Haskell Language Server)
+      // See https://github.com/haskell/haskell-ide-engine#integration-with-ghcide-the-new-haskell-language-server
+      // for details.
+      "LSP_PROVIDER": "hie"
+    }
+  },
+  "mounts": [
+    // Make sure the volume names (e.g vscode-haskell-stack) are unique to a project to avoid sharing caches between
+    // other code bases.
+    "source=vscode-haskell-stack,target=/home/vscode/.stack",
+    "source=vscode-haskell-cache,target=/home/vscode/.cache"
+  ],
+  "postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/",
   // Use 'settings' to set *default* container specific settings.json values on container create. 
   // You can edit these settings after create using File > Preferences > Settings > Remote.
   "settings": {
