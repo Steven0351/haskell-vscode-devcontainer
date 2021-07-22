@@ -1,6 +1,5 @@
 ARG GHC_VERSION
-ARG LSP_PROVIDER
-FROM steven0351/ghc-stack-${LSP_PROVIDER}:${GHC_VERSION}
+FROM haskell:${GHC_VERSION}
 
 # This Dockerfile adds a non-root user with sudo access. Use the "remoteUser"
 # property in devcontainer.json to use it. On Linux, the container user's GID/UIDs
@@ -24,10 +23,11 @@ RUN apt-get update \
     && /bin/bash /tmp/common-setup.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" \
     && rm /tmp/common-setup.sh
 
-RUN mv /root/.local /opt/haskell-tools && \
-    chmod -R 755 /opt/haskell-tools && \
-    rm -rf /root/.cabal /root/.stack /root/.hoogle && \
-    mkdir /home/${USERNAME}/.stack && \
-    echo "system-ghc: true" >> /home/${USERNAME}/.stack/config.yaml
+USER vscode
+
+RUN mkdir /home/${USERNAME}/.stack && \
+    echo "system-ghc: true" >> /home/${USERNAME}/.stack/config.yaml && \
+    mkdir /home/${USERNAME}/workspace
+
 
 ENV PATH /opt/haskell-tools/bin:$PATH

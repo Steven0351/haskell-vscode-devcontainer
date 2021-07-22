@@ -2,7 +2,7 @@
 
 ### What is this?
 
-This is a [DevContainer](https://code.visualstudio.com/docs/remote/containers) environment for Visual Studio Code, allowing automatically installing the Haskell compiler (GHC), Stack, Cabal, and HIE (Haskell IDE Engine) || HLS (Haskell Language Server), and the necessary Visual Studio Code extensions to set up a Haskell development environment with zero additional effort.
+This is a [DevContainer](https://code.visualstudio.com/docs/remote/containers) environment for Visual Studio Code, allowing automatically installing the Haskell compiler (GHC) and setting up the Haskell Language Server VS Code plugin. 
 
 ### How to use this?
 
@@ -26,14 +26,12 @@ For more information and setup, read the official documentation: https://code.vi
 
 The `Dockerfile` contains the following:
 
-1. An image, based on [`steven0351/ghc-stack-hie`](https://hub.docker.com/r/steven0351/ghc-stack-hie) or [`steven0351/ghc-stack-hls`](https://hub.docker.com/r/steven0351/ghc-stack-hls) (depending on the `devcontainer.json` configuration), which are based on the [Official Haskell Image](https://hub.docker.com/_/haskell).
-2. Stack configured with `system-ghc: true` to prevent stack from installing another GHC.
-3. A script to install some additional tools (such as git), as well as configuring a special user `vscode` to allow access from VSCode.
+1. Stack configured with `system-ghc: true` to prevent stack from installing another GHC.
+2. A script to install some additional tools (such as git), as well as configuring a special user `vscode` to allow access from VSCode.
 
 The `devcontainer.json` provides the following additional configurations:
   * build.args:
-    * GHC_VERSION - Defaults to 8.8.3. supported versions are 8.6.5, and 8.8.3
-    * LSP_PROVIDER - Defaults to hie. Supported providers are hie (Hakell IDE Engine) or hls (Haskell Language Server)
+    * GHC_VERSION - Defaults to 8.10.4
   * Volumes:
     * vscode-haskell-stack - A volume to store ~/.stack to prevent having to fetch and rebuild dependencies
     * vscode-haskell-cache - A volume to store ~/.cache for hie-bios generated files
